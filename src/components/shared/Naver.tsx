@@ -20,7 +20,12 @@ const Naver = () => {
 
   const navItems = (
     <>
-      <Link href={"/"}>Home</Link>
+      <Link className="mx-3 font-semibold" href={"/"}>
+        Home
+      </Link>
+      <Link className="mx-3 font-semibold" href={"/"}>
+        Shop
+      </Link>
     </>
   );
   return (
@@ -82,7 +87,7 @@ const Naver = () => {
                     )}
                   </button>
                 </div>
-                <div></div>
+                <div>kfdsla</div>
               </div>
             </div>
 
@@ -95,6 +100,12 @@ const Naver = () => {
             >
               <div className="flex flex-col -mx-6 lg:flex-row lg:items-center  lg:mx-8">
                 {navItems}
+                <Button variant="outline" className="rounded-full mx-3 p-0 size-10">
+                  <Heart />
+                </Button>
+                <Button variant="outline" className="rounded-full mx-3 p-0 size-10">
+                  <ShoppingBag />
+                </Button>
               </div>
               <div className="lg:grid hidden">
                 <div className="relative inline-block">

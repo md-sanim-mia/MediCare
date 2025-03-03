@@ -1,3 +1,4 @@
+import Footer from "@/components/shared/Footer";
 import Naver from "@/components/shared/Naver";
 
 const CommonLayout = ({ children }: { children: React.ReactNode }) => {
@@ -5,6 +6,7 @@ const CommonLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       <Naver />
       <main className="min-h-screen">{children}</main>
+      <Footer />
     </>
   );
 };

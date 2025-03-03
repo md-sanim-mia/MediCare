@@ -167,7 +167,7 @@ const BannerSection = () => {
           </Swiper>
         </div>
 
-        <div className="max-w-screen-xl mx-auto mt-5">
+        <div className="max-w-screen-xl mx-auto mt-8">
           <div className="flex items-center justify-around">
             <div className="flex gap-2 items-center">
               <ShieldCheck size={40} className="text-[#ff7046] mx-auto" />
