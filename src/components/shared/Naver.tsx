@@ -20,11 +20,20 @@ const Naver = () => {
 
   const navItems = (
     <>
-      <Link className="mx-3 font-semibold" href={"/"}>
+      <Link className="mx-3 font-semibold hover:text-[#ff7046]" href={"/"}>
         Home
       </Link>
-      <Link className="mx-3 font-semibold" href={"/"}>
+      <Link className="mx-3 font-semibold hover:text-[#ff7046]" href={"/shop"}>
         Shop
+      </Link>
+      <Link className="mx-3 font-semibold hover:text-[#ff7046]" href={"/blogs"}>
+        Blog
+      </Link>
+      <Link
+        className="mx-3 font-semibold hover:text-[#ff7046]"
+        href={"/contact"}
+      >
+        Contact
       </Link>
     </>
   );
@@ -43,7 +52,10 @@ const Naver = () => {
                   src={logo}
                   alt="logo"
                 />
-                <h2 className=" text-xl">MediCare</h2>
+                <h2 className=" text-xl font-bold">
+                  {" "}
+                  <span className="text-[#ff7046]">Medi</span>Care
+                </h2>
               </div>
 
               <div className="flex lg:hidden gap-3 items-center">
@@ -100,10 +112,16 @@ const Naver = () => {
             >
               <div className="flex flex-col -mx-6 lg:flex-row lg:items-center  lg:mx-8">
                 {navItems}
-                <Button variant="outline" className="rounded-full mx-3 p-0 size-10">
+                <Button
+                  variant="outline"
+                  className="rounded-full mx-3 p-0 size-10"
+                >
                   <Heart />
                 </Button>
-                <Button variant="outline" className="rounded-full mx-3 p-0 size-10">
+                <Button
+                  variant="outline"
+                  className="rounded-full mx-3 p-0 size-10 "
+                >
                   <ShoppingBag />
                 </Button>
               </div>
