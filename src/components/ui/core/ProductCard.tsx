@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
   Card,
@@ -9,13 +10,15 @@ import {
 import Image from "next/image";
 import { Button } from "../button";
 import { Heart, ShoppingCart, Star } from "lucide-react";
+import { TMedicine } from "@/types/product";
 
-const ProductCard = () => {
+const ProductCard = ({ product }: { product: TMedicine }) => {
   return (
     <Card className="p-3">
       <CardHeader className="relative p-0 h-48">
         <Image
           src={
+            product?.image ||
             "https://psediting.websites.co.in/obaju-turquoise/img/product-placeholder.png"
           }
           width={500}
@@ -30,22 +33,23 @@ const ProductCard = () => {
       </CardHeader>
 
       <CardContent className=" p-0 mt-2">
-        <Link href={`/products/}`} passHref>
+        <Link href={`/shop/${product?._id}`} passHref>
           <CardTitle
-            title={"samsung"}
-            className="font-semibold cursor-pointer text-sm"
+            title={product.brand}
+            className="font-semibold cursor-pointer underline  text-sm"
           >
-            {/* {product?.name.length > 30
+            {product?.name.length > 30
               ? product?.name?.slice(0, 30) + "..."
-              : product?.name} */}
-            <p>fdlsafj fdsafjls fdsalkf</p>
+              : product?.name}
           </CardTitle>
         </Link>
 
         <div className="flex items-center justify-between my-2">
           <p className="text-sm text-gray-600">
             <>
-              <span className="font-semibold mr-2 text-orange-400">$ 3000</span>
+              <span className="font-semibold mr-2 text-orange-400">
+                $ {product?.price}
+              </span>
               <del className="font-semibold text-xs">$ 2000</del>
             </>
 
@@ -54,7 +58,7 @@ const ProductCard = () => {
 
           <div className="flex items-center justify-center gap-1">
             <Star className="w-4 h-4" fill="orange" stroke="orange" />
-            <span className="text-sm font-medium text-gray-700">{4}</span>
+            <span className="text-sm font-medium text-gray-700">{4.0}</span>
           </div>
         </div>
       </CardContent>

@@ -14,29 +14,37 @@ import Link from "next/link";
 import { useState } from "react";
 import logo from ".//..//..//assets/v987-18a-removebg-preview.png";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 const Naver = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpens, setIsOpens] = useState(false);
+  const pathname = usePathname();
 
-  const navItems = (
-    <>
-      <Link className="mx-3 font-semibold hover:text-[#ff7046]" href={"/"}>
-        Home
-      </Link>
-      <Link className="mx-3 font-semibold hover:text-[#ff7046]" href={"/shop"}>
-        Shop
-      </Link>
-      <Link className="mx-3 font-semibold hover:text-[#ff7046]" href={"/blogs"}>
-        Blog
-      </Link>
-      <Link
-        className="mx-3 font-semibold hover:text-[#ff7046]"
-        href={"/contact"}
-      >
-        Contact
-      </Link>
-    </>
-  );
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/shop", label: "Shop" },
+    { href: "/blogs", label: "Blogs" },
+    { href: "/contact", label: "Contact Us" },
+  ];
+  // const navItems = (
+  //   <>
+  //     <Link className={"mx-3 font-semibold hover:text-[#ff7046]"} href={"/"}>
+  //       Home
+  //     </Link>
+  //     <Link className="mx-3 font-semibold hover:text-[#ff7046]" href={"/shop"}>
+  //       Shop
+  //     </Link>
+  //     <Link className="mx-3 font-semibold hover:text-[#ff7046]" href={"/blogs"}>
+  //       Blog
+  //     </Link>
+  //     <Link
+  //       className="mx-3 font-semibold hover:text-[#ff7046]"
+  //       href={"/contact"}
+  //     >
+  //       Contact
+  //     </Link>
+  //   </>
+  // );
   return (
     <div className="h-16">
       {" "}
@@ -137,7 +145,19 @@ const Naver = () => {
               }`}
             >
               <div className="flex flex-col  lg:flex-row lg:items-center  ">
-                {navItems}
+                {navLinks?.map((item) => (
+                  <Link
+                    key={item?.href}
+                    href={item?.href}
+                    className={`${
+                      pathname === item?.href
+                        ? "text-[#ff7046] font-bold mx-3"
+                        : "mx-3 font-semibold hover:text-[#ff7046]"
+                    }`}
+                  >
+                    {item?.label}
+                  </Link>
+                ))}
               </div>
               <div className="lg:flex hidden">
                 <Button
