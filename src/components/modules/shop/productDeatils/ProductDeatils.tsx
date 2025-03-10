@@ -112,17 +112,19 @@ const ProductDeatils = ({ product }: { product: TMedicine }) => {
           <label htmlFor="quantity" className="font-semibold text-lg ">
             Totall Price : $ {product?.price * count}
           </label>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <Button
               onClick={handileClickdecrease}
-              className=" bg-gray-100 text-black hover:bg-gray-50 cursor-pointer   rounded-l-md "
+              variant="outline"
+              className=" size-8  bg-gray-100 text-black hover:bg-gray-50 cursor-pointer   rounded-sm "
             >
               <Minus />
             </Button>
             <p className="font-normal text-xl"> {count} </p>
             <Button
               onClick={handileClickIncrease}
-              className=" bg-gray-100 text-black hover:bg-gray-50  cursor-pointer  rounded-l-md "
+              variant="outline"
+              className=" size-8 bg-gray-100 text-black hover:bg-gray-50  cursor-pointer  rounded-sm "
             >
               <Plus />
             </Button>
