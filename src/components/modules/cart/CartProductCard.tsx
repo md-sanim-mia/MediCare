@@ -1,24 +1,28 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { TMedicine } from "@/types/product";
+import {
+  decrementOrderQuantity,
+  IcartProduct,
+  incerementOrderQuantity,
+} from "@/redux/features/cart/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { Minus, Plus, Trash } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
 
-export default function CartProductCard({ product }: { product: TMedicine }) {
-  const [count, setCount] = useState(1);
-  const handileClickIncrease = () => {
-    if (count < product?.stock) {
-      setCount(count + 1);
-    }
+export default function CartProductCard({
+  product,
+}: {
+  product: IcartProduct;
+}) {
+  const dispatch = useAppDispatch();
+  const handileClickIncrease = (id: string) => {
+    dispatch(incerementOrderQuantity(id));
   };
-  const handileClickdecrease = () => {
-    if (count > 1) {
-      setCount(count - 1);
-    }
+  const handileClickdecrease = (id: string) => {
+    dispatch(decrementOrderQuantity(id));
   };
   return (
-    <div className="bg-[#efefef] rounded-lg flex p-5 gap-5">
+    <div className="bg-[#302929] rounded-lg flex p-5 gap-5">
       <div className="h-full w-32 rounded-md overflow-hidden">
         <Image
           src={product?.image}
@@ -49,15 +53,17 @@ export default function CartProductCard({ product }: { product: TMedicine }) {
           <div className="flex items-center gap-2">
             <p className="text-gray-500 font-semibold">Quantity</p>
             <Button
-              onClick={handileClickdecrease}
+              onClick={() => handileClickdecrease(product._id)}
               variant="outline"
               className="size-8 rounded-sm"
             >
               <Minus />
             </Button>
-            <p className="font-semibold text-xl p-2">{count}</p>
+            <p className="font-semibold text-xl p-2">
+              {product?.orderQuantity}
+            </p>
             <Button
-              onClick={handileClickIncrease}
+              onClick={() => handileClickIncrease(product._id)}
               variant="outline"
               className="size-8 rounded-sm"
             >

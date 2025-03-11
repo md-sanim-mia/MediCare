@@ -11,8 +11,15 @@ import Image from "next/image";
 import { Button } from "../button";
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import { TMedicine } from "@/types/product";
+import { useAppDispatch } from "@/redux/hooks";
+import { addProduct } from "@/redux/features/cart/cartSlice";
 
 const ProductCard = ({ product }: { product: TMedicine }) => {
+  const dispatch = useAppDispatch();
+  const handileClickAddProduct = (produc: TMedicine) => {
+    console.log(produc);
+    dispatch(addProduct(produc));
+  };
   return (
     <Card className="p-3">
       <CardHeader className="relative p-0 h-48">
@@ -69,6 +76,7 @@ const ProductCard = ({ product }: { product: TMedicine }) => {
             Buy Now
           </Button>
           <Button
+            onClick={() => handileClickAddProduct(product)}
             variant="outline"
             size="sm"
             className="w-8 h-8 p-0 flex items-center  cursor-pointer justify-center rounded-full"

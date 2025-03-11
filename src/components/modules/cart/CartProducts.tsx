@@ -2,14 +2,18 @@ import Image from "next/image";
 import emptyCart from "@/assets/empty-cart (1).png";
 
 import CartProductCard from "./CartProductCard";
-import { getAllProducts } from "@/services/products";
-import { TMedicine } from "@/types/product";
+
+import { useAppSelector } from "@/redux/hooks";
+import {
+  IcartProduct,
+  orderedProductsSelector,
+} from "@/redux/features/cart/cartSlice";
 export default async function CartProducts() {
-  const { data: products } = await getAllProducts();
+  const data = useAppSelector(orderedProductsSelector);
 
   return (
     <div className="border-2   bg-background brightness-105 rounded-md col-span-8  h-full row-span-3 space-y-5">
-      {products.length === 0 && (
+      {data.length === 0 && (
         <div className="text-center text-gray-500">
           <p className="text-lg font-semibold">Your cart is empty</p>
           <p className="mt-2">
@@ -21,7 +25,7 @@ export default async function CartProducts() {
           </div>
         </div>
       )}
-      {products.map((product: TMedicine) => (
+      {data.map((product: IcartProduct) => (
         <CartProductCard key={product._id} product={product} />
       ))}
     </div>
