@@ -6,9 +6,13 @@ export interface IcartProduct extends TMedicine {
 }
 type TInitialState = {
   products: IcartProduct[];
+  city: string;
+  shappingAddress: string;
 };
 const initialState: TInitialState = {
   products: [],
+  city: "",
+  shappingAddress: "",
 };
 
 const cartSlice = createSlice({
@@ -30,7 +34,10 @@ const cartSlice = createSlice({
         (product) => product._id === action.payload
       );
       if (productQuantity) {
-        if (productQuantity && productQuantity.orderQuantity > 1) {
+        if (
+          productQuantity &&
+          productQuantity.orderQuantity < productQuantity.stock
+        ) {
           productQuantity.orderQuantity += 1;
           return;
         }
@@ -41,20 +48,68 @@ const cartSlice = createSlice({
         (product) => product._id === action.payload
       );
       if (productQuantity) {
-        if (
-          productQuantity &&
-          productQuantity.orderQuantity < productQuantity.stock
-        ) {
+        if (productQuantity && productQuantity.orderQuantity > 1) {
           productQuantity.orderQuantity -= 1;
           return;
         }
       }
     },
+    removeProduct: (state, action) => {
+      state.products = state.products.filter(
+        (product) => product._id !== action.payload
+      );
+    },
+    clearProductCart: (state) => {
+      state.products = [];
+    },
+    updateCity: (state, action) => {
+      state.city = action.payload;
+    },
+    updateShappingAddress: (state, action) => {
+      state.shappingAddress = action.payload;
+    },
   },
 });
 export const orderedProductsSelector = (state: RootState) => {
-  return state.cartReducer.products;
+  return state.persistCart.products;
 };
-export const { addProduct, incerementOrderQuantity, decrementOrderQuantity } =
-  cartSlice.actions;
+export const subTotalSelector = (state: RootState) => {
+  return state.persistCart.products.reduce((acc, proucts) => {
+    return acc + proucts.price * proucts.orderQuantity;
+  }, 0);
+};
+
+export const shappingCostSelector = (state: RootState) => {
+  if (
+    state.persistCart.city &&
+    state.persistCart.city === "Dhaka" &&
+    state.persistCart.products.length > 0
+  ) {
+    return 60;
+  } else if (
+    state.persistCart.city &&
+    state.persistCart.city !== "Dhaka" &&
+    state.persistCart.products.length > 0
+  ) {
+    return 120;
+  } else {
+    return 0;
+  }
+};
+
+// addresss
+export const citySelector = (state: RootState) => {
+  return state.persistCart.city;
+};
+export const shappingSelector = (state: RootState) => {
+  return state.persistCart.shappingAddress;
+};
+export const {
+  addProduct,
+  incerementOrderQuantity,
+  decrementOrderQuantity,
+  removeProduct,
+  updateCity,
+  updateShappingAddress,
+} = cartSlice.actions;
 export default cartSlice.reducer;

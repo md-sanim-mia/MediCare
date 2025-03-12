@@ -1,9 +1,9 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import {
   decrementOrderQuantity,
   IcartProduct,
   incerementOrderQuantity,
+  removeProduct,
 } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { Minus, Plus, Trash } from "lucide-react";
@@ -21,8 +21,11 @@ export default function CartProductCard({
   const handileClickdecrease = (id: string) => {
     dispatch(decrementOrderQuantity(id));
   };
+  const handileClickRemove = (id: string) => {
+    dispatch(removeProduct(id));
+  };
   return (
-    <div className="bg-[#302929] rounded-lg flex p-5 gap-5">
+    <div className="bg-[#efefef] rounded-lg flex p-5 gap-5">
       <div className="h-full w-32 rounded-md overflow-hidden">
         <Image
           src={product?.image}
@@ -46,16 +49,13 @@ export default function CartProductCard({
         </div>
         <hr className="my-1" />
         <div className="flex items-center justify-between">
-          <h2>
-            Price:
-            {product?.price}
-          </h2>
+          <h2>Price: ${product?.price}</h2>
           <div className="flex items-center gap-2">
             <p className="text-gray-500 font-semibold">Quantity</p>
             <Button
-              onClick={() => handileClickdecrease(product._id)}
+              onClick={() => handileClickdecrease(product?._id)}
               variant="outline"
-              className="size-8 rounded-sm"
+              className="size-8 rounded-sm cursor-pointer"
             >
               <Minus />
             </Button>
@@ -63,13 +63,17 @@ export default function CartProductCard({
               {product?.orderQuantity}
             </p>
             <Button
-              onClick={() => handileClickIncrease(product._id)}
+              onClick={() => handileClickIncrease(product?._id)}
               variant="outline"
-              className="size-8 rounded-sm"
+              className="size-8 rounded-sm cursor-pointer"
             >
               <Plus />
             </Button>
-            <Button variant="outline" className="size-8 rounded-sm">
+            <Button
+              onClick={() => handileClickRemove(product?._id)}
+              variant="outline"
+              className="size-8 rounded-sm cursor-pointer"
+            >
               <Trash className="text-red-500/50" />
             </Button>
           </div>
