@@ -8,7 +8,7 @@ const AllCartPage = () => {
   return (
     <div className="mx-auto max-w-screen-xl mt-8 lg:mb-24 md:mb-20 mb-16">
       <NMBanner title="Cart Page" path="Home - Cart" />
-      <div className="grid grid-cols-12 gap-8 my-5">
+      <div className="lg:grid lg:grid-cols-12 gap-8 my-5">
         <CartProducts />
         <Coupon />
         <Address />

@@ -37,7 +37,10 @@ export default function Address() {
         <h1 className="text-2xl font-bold">Address</h1>
         <p className="text-gray-500">Enter your address.</p>
         <div className="mt-5 w-full">
-          <Select onValueChange={(city) => handleCitySelect(city)}>
+          <Select
+            defaultValue={city}
+            onValueChange={(city) => handleCitySelect(city)}
+          >
             <SelectTrigger className="mb-5 w-full">
               <SelectValue placeholder="Select a city" className="w-full" />
             </SelectTrigger>
@@ -50,6 +53,7 @@ export default function Address() {
             </SelectContent>
           </Select>
           <Textarea
+            defaultValue={shappingAddress}
             onChange={(e) => handleShippingAddress(e.target.value)}
             rows={5}
           />

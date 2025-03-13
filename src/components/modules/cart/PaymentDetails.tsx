@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import {
+  citySelector,
   shappingCostSelector,
   subTotalSelector,
 } from "@/redux/features/cart/cartSlice";
@@ -9,8 +10,10 @@ import { useAppSelector } from "@/redux/hooks";
 const PaymentDetails = () => {
   const subTotal = useAppSelector(subTotalSelector);
   const shappingCost = useAppSelector(shappingCostSelector);
+  const shippingCity = useAppSelector(citySelector);
+  console.log(shippingCity);
   return (
-    <div className="border-2 bg-[#efefef] border-white  brightness-105 rounded-md col-span-4 h-fit p-5">
+    <div className="border-2 bg-[#efefef] border-white  brightness-105 rounded-md lg:col-span-4 h-fit p-5">
       <h1 className="text-2xl font-bold">Payment Details</h1>
 
       <div className="space-y-2 mt-4">
@@ -27,7 +30,10 @@ const PaymentDetails = () => {
         <div className="flex justify-between">
           <p className="text-gray-500 ">Shipment Cost</p>
           {/* <p className="font-semibold">{currencyFormatter(shippingCost)}</p> */}
-          <p className="font-semibold">{shappingCost} BDT</p>
+          <p className="font-semibold">
+            {" "}
+            {shippingCity ? shappingCost : "00"} BDT
+          </p>
         </div>
       </div>
       <div className="flex justify-between mt-10 mb-5">

@@ -5,11 +5,13 @@ import {
   Bot,
   Frame,
   LifeBuoy,
+  ListOrdered,
   Map,
   PieChart,
   Send,
   Settings,
   SquareTerminal,
+  User,
 } from "lucide-react";
 import {
   Sidebar,
@@ -29,28 +31,24 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/users/dashboard",
+      url: "/admin",
       icon: SquareTerminal,
       isActive: true,
     },
     {
-      title: "Shop",
-      url: "/users/shop/products",
+      title: "Products",
+      url: "/admin/products",
       icon: Bot,
-      items: [
-        {
-          title: "Manage Products",
-          url: "/users/shop/all-products",
-        },
-        {
-          title: "Manage Categories",
-          url: "/users/shop/category",
-        },
-        {
-          title: "Manage Brands",
-          url: "/users/shop/brand",
-        },
-      ],
+    },
+    {
+      title: "All Users",
+      url: "/admin/users",
+      icon: User,
+    },
+    {
+      title: "All Orders",
+      url: "/admin/orders",
+      icon: ListOrdered,
     },
 
     {
@@ -105,7 +103,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <Link href="/">
                 <div className="flex items-center justify-center"></div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <h2 className="font-bold text-xl">NextMart</h2>
+                  <h2 className="font-bold text-xl">MediCare</h2>
                 </div>
               </Link>
             </SidebarMenuButton>

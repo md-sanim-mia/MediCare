@@ -166,12 +166,15 @@ const Naver = () => {
                 >
                   <Heart />
                 </Button>
-                <Button
-                  variant="outline"
-                  className="rounded-full mx-2 p-0 size-9 "
-                >
-                  <ShoppingBag />
-                </Button>
+                <Link href={"/cart"}>
+                  {" "}
+                  <Button
+                    variant="outline"
+                    className="rounded-full mx-2 p-0 size-9 cursor-pointer"
+                  >
+                    <ShoppingBag />
+                  </Button>
+                </Link>
                 <Button
                   variant="outline"
                   className="rounded-full mx-2 p-0 size-9 "

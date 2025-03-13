@@ -71,25 +71,25 @@ const cartSlice = createSlice({
   },
 });
 export const orderedProductsSelector = (state: RootState) => {
-  return state.persistCart.products;
+  return state.cart.products;
 };
 export const subTotalSelector = (state: RootState) => {
-  return state.persistCart.products.reduce((acc, proucts) => {
+  return state.cart.products.reduce((acc, proucts) => {
     return acc + proucts.price * proucts.orderQuantity;
   }, 0);
 };
 
 export const shappingCostSelector = (state: RootState) => {
   if (
-    state.persistCart.city &&
-    state.persistCart.city === "Dhaka" &&
-    state.persistCart.products.length > 0
+    state.cart.city &&
+    state.cart.city === "Dhaka" &&
+    state.cart.products.length > 1
   ) {
     return 60;
   } else if (
-    state.persistCart.city &&
-    state.persistCart.city !== "Dhaka" &&
-    state.persistCart.products.length > 0
+    state.cart.city &&
+    state.cart.city !== "Dhaka" &&
+    state.cart.products.length > 1
   ) {
     return 120;
   } else {
@@ -99,10 +99,10 @@ export const shappingCostSelector = (state: RootState) => {
 
 // addresss
 export const citySelector = (state: RootState) => {
-  return state.persistCart.city;
+  return state.cart.city;
 };
 export const shappingSelector = (state: RootState) => {
-  return state.persistCart.shappingAddress;
+  return state.cart.shappingAddress;
 };
 export const {
   addProduct,
