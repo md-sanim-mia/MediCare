@@ -9,18 +9,22 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { TMedicine } from "@/types/product";
+import { deleteProduct } from "@/services/products";
+import { useAppSelector } from "@/redux/hooks";
+import { currentToken } from "@/redux/features/auth/authSlice";
 
 const ManageProducts = ({ products }: { products: TMedicine[] }) => {
   const router = useRouter();
   const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
-
+  const token = useAppSelector(currentToken);
   //   const handleView = (product: IProduct) => {
   //     console.log("Viewing product:", product);
   //   };
 
-  //   const handleDelete = (productId: string) => {
-  //     console.log("Deleting product with ID:", productId);
-  //   };
+  const handleDelete = async (productId: string) => {
+    const res = await deleteProduct(productId, token!);
+    console.log(res);
+  };
 
   const columns: ColumnDef<TMedicine>[] = [
     {
@@ -114,21 +118,17 @@ const ManageProducts = ({ products }: { products: TMedicine[] }) => {
           </button>
 
           <button
-            className="text-gray-500 hover:text-green-500"
+            className="text-gray-500 cursor-pointer hover:text-green-500"
             title="Edit"
-            onClick={() =>
-              router.push(
-                `/user/shop/products/update-product/${row.original._id}`
-              )
-            }
+            onClick={() => router.push(`/admin/products/${row.original._id}`)}
           >
             <Edit className="w-5 h-5" />
           </button>
 
           <button
-            className="text-gray-500 hover:text-red-500"
+            className="text-gray-500 cursor-pointer hover:text-red-500"
             title="Delete"
-            // onClick={() => handleDelete(row.original._id)}
+            onClick={() => handleDelete(row.original._id)}
           >
             <Trash className="w-5 h-5" />
           </button>

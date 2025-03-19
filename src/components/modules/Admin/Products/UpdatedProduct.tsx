@@ -31,26 +31,32 @@ import { TMedicine } from "@/types/product";
 import ImageGenetors from "@/components/ui/core/NMImageGenertor";
 import Image from "next/image";
 import { currentToken } from "@/redux/features/auth/authSlice";
-import { addProduct } from "@/services/products";
+import { addProduct, updatedProduct } from "@/services/products";
 import { useAppSelector } from "@/redux/hooks";
 
-export default function AddProductForm() {
+export default function UpdatedProductForm({
+  product,
+}: {
+  product: TMedicine;
+}) {
   const router = useRouter();
 
   const form = useForm({
     defaultValues: {
-      name: "",
-      description: "",
-      price: "",
-      category: "",
-      expiry_date: "",
-      dosage: "",
-      brand: "",
-      stock: "",
-      form: "",
-      prescription_required: "",
-      side_effects: [{ value: "" }],
-      uses: [{ value: "" }],
+      name: product.name || "",
+      description: product.description || "",
+      price: product.price || "",
+      category: product.category || "",
+      expiry_date: product.expiry_date || "",
+      dosage: product.dosage || "",
+      brand: product.brand || "",
+      stock: product.stock || "",
+      form: product.form || "",
+      prescription_required: product.prescription_required || "",
+      side_effects: product.side_effects.map((item) => ({ value: item })) || [
+        { value: "" },
+      ],
+      uses: product.uses.map((item) => ({ value: item })) || [{ value: "" }],
     },
   });
 
@@ -76,7 +82,7 @@ export default function AddProductForm() {
     appendFeatures({ value: "" });
   };
 
-  const [productImage, setProductImage] = useState<string>();
+  const [productImage, setProductImage] = useState<string>(product.image);
   const handileClickChengeImage = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -103,13 +109,16 @@ export default function AddProductForm() {
       stock: parseInt(data.stock),
       prescription_required: Boolean(data.prescription_required),
     };
-    const res = await addProduct(modifiyData, token!);
+    const res = await updatedProduct(modifiyData, product._id, token!);
     console.log(res);
+    if (res?.success) {
+      router.push("/admin/products");
+    }
   };
   return (
     <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-2xl p-5 ">
       <div className="flex items-center space-x-4 mb-5 ">
-        <h1 className="text-xl font-bold">Add Product</h1>
+        <h1 className="text-xl font-bold">Update Product</h1>
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -216,10 +225,7 @@ export default function AddProductForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Prescription Required</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange}>
                     <FormControl className="w-full">
                       <SelectTrigger>
                         <SelectValue placeholder="Select prescription true or false" />
@@ -383,7 +389,7 @@ export default function AddProductForm() {
             </div>
           </div>
           <Button type="submit" className="mt-5 w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Adding Product....." : "Add Product"}
+            {isSubmitting ? "Update Product....." : "Update Product"}
           </Button>
         </form>
       </Form>

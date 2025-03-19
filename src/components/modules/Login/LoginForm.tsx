@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Logo from "..//..//..//assets/v987-18a-removebg-preview.png";
 import Image from "next/image";
+import { jwtDecode } from "jwt-decode";
 import {
   Form,
   FormControl,
@@ -13,13 +14,31 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { logingUser } from "@/services/auth";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser } from "@/redux/features/auth/authSlice";
+
 const LoginForm = () => {
   const form = useForm();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   const {
     formState: { isSubmitting },
   } = form;
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+    try {
+      const res = await logingUser(data);
+      const token = res?.data?.accessToken;
+      const user = jwtDecode(token);
+      dispatch(setUser({ user: user, token: token }));
+      console.log(token, user);
+      if (token) {
+        router.push("/");
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   };
   return (
     <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5">

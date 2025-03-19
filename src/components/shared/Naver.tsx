@@ -1,5 +1,5 @@
 "use client";
-import { Heart, LogOut, Search, ShoppingBag } from "lucide-react";
+import { Heart, LogOut, Search, ShoppingBag, User } from "lucide-react";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -15,17 +15,23 @@ import { useState } from "react";
 import logo from ".//..//..//assets/v987-18a-removebg-preview.png";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { currentToken, logOut } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 const Naver = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpens, setIsOpens] = useState(false);
   const pathname = usePathname();
-
+  const dispatch = useAppDispatch();
+  const token = useAppSelector(currentToken);
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/shop", label: "Shop" },
     { href: "/blogs", label: "Blogs" },
     { href: "/contact", label: "Contact Us" },
   ];
+  const handileClickLogout = () => {
+    dispatch(logOut());
+  };
   // const navItems = (
   //   <>
   //     <Link className={"mx-3 font-semibold hover:text-[#ff7046]"} href={"/"}>
@@ -72,26 +78,33 @@ const Naver = () => {
                   <ShoppingBag />
                   <Search />
                   <div className="ml-4">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger>
-                        <Avatar>
-                          <AvatarImage src="https://github.com/shadcn.png" />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Dashboard</DropdownMenuItem>
-                        <DropdownMenuItem>My Shop</DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="bg-red-500 text-gray-100 cursor-pointer">
-                          <LogOut />
-                          Log Out
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    {token ? (
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <Avatar>
+                            <AvatarImage src="https://github.com/shadcn.png" />
+                            <AvatarFallback>CN</AvatarFallback>
+                          </Avatar>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem>Profile</DropdownMenuItem>
+                          <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                          <DropdownMenuItem>My Shop</DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem
+                            onClick={handileClickLogout}
+                            className="bg-red-500 text-gray-100 cursor-pointer"
+                          >
+                            <LogOut />
+                            Log Out
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    ) : (
+                      <User />
+                    )}
                   </div>
                 </div>
                 <div className="">
@@ -181,27 +194,38 @@ const Naver = () => {
                 >
                   <Search />
                 </Button>
+
                 <div className="ml-10">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>Profile</DropdownMenuItem>
-                      <DropdownMenuItem>Dashboard</DropdownMenuItem>
-                      <DropdownMenuItem>My Shop</DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem className="bg-red-500 text-gray-100 cursor-pointer">
-                        <LogOut />
-                        Log Out
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  {token ? (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <Avatar>
+                          <AvatarImage src="https://github.com/shadcn.png" />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                        <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                        <DropdownMenuItem>My Shop</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={handileClickLogout}
+                          className="bg-red-500 text-gray-100 cursor-pointer"
+                        >
+                          <LogOut />
+                          Log Out
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  ) : (
+                    <Link href={"/login"}>
+                      {" "}
+                      <User />
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
