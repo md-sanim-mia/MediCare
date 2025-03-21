@@ -14,7 +14,7 @@ import Link from "next/link";
 import { useState } from "react";
 import logo from ".//..//..//assets/v987-18a-removebg-preview.png";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { currentToken, logOut } from "@/redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 const Naver = () => {
@@ -32,6 +32,7 @@ const Naver = () => {
   const handileClickLogout = () => {
     dispatch(logOut());
   };
+  const router = useRouter();
   // const navItems = (
   //   <>
   //     <Link className={"mx-3 font-semibold hover:text-[#ff7046]"} href={"/"}>
@@ -208,7 +209,12 @@ const Naver = () => {
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => router.push("/admin")}
+                          className="cursor-pointer"
+                        >
+                          Dashboard
+                        </DropdownMenuItem>
                         <DropdownMenuItem>My Shop</DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem

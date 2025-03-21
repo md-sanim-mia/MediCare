@@ -103,14 +103,6 @@ const ManageUsers = ({ products }: { products: TUser[] }) => {
           </button>
 
           <button
-            className="text-gray-500 cursor-pointer hover:text-green-500"
-            title="Edit"
-            onClick={() => router.push(`/admin/products/${row.original._id}`)}
-          >
-            <Edit className="w-5 h-5" />
-          </button>
-
-          <button
             className="text-gray-500 cursor-pointer hover:text-red-500"
             title="Delete"
             onClick={() => handleDelete(row.original._id)}
