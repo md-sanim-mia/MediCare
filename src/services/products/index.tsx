@@ -2,7 +2,24 @@
 
 import { revalidateTag } from "next/cache";
 
-export const getAllProducts = async () => {
+export const getAllProducts = async (query: {
+  [key: string]: string | string[] | undefined;
+}) => {
+  const params = new URLSearchParams();
+  if (query?.price) {
+    params.append("minPrice", "0");
+    params.append("maxPrice", query.price.toString());
+  }
+
+  if (query?.category) {
+    params.append("category", query.category.toString());
+  }
+  if (query?.brand) {
+    params.append("brand", query.brand.toString());
+  }
+  if (query?.rating) {
+    params.append("rating", query.rating.toString());
+  }
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/medicines`, {
       next: {

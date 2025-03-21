@@ -7,6 +7,8 @@ import { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Star } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 const FilterSidebar = () => {
   const [price, setPrice] = useState(0);
@@ -25,32 +27,37 @@ const FilterSidebar = () => {
   const brands = ["HP", "Apple", "Dell", "Asus", "Canon"];
   const ratings = [5, 4, 3, 2, 1];
   const availability = ["In Stock", "Pre Order", "Upcoming"];
-
+  const pathName = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const handileClickSearchQuery = (query: string, value: string | number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(query, value.toString());
     console.log(query, value);
+    router.push(`${pathName}?${params.toString()}`, { scroll: false });
   };
   return (
     <Card className="p-4 rounded-2xl shadow-md w-72">
       <CardContent>
-        <h2 className="text-lg font-semibold mb-4">Filter By Price</h2>
-        {/* <div className="flex gap-2 mb-2">
-          <input
-            type="text"
-            placeholder="Min"
-            className="border rounded px-2 py-1 w-full"
-          />
-          <input
-            type="text"
-            placeholder="Max"
-            className="border rounded px-2 py-1 w-full"
-          />
-        </div> */}
+        <div className="flex justify-between items-center">
+          <h2 className="text-lg font-semibold mb-4 ">Filter</h2>
+          <Button
+            onClick={() => router.push(`${pathName}`, { scroll: false })}
+            className="cursor-pointer"
+          >
+            Clear Filters
+          </Button>
+        </div>
+        <h2 className="text-lg font-semibold mb-3">Price</h2>
         <Slider
           defaultValue={[price]}
           max={1000}
-          onValueChange={(val) => setPrice(val[0])}
+          onValueChange={(val) => {
+            setPrice(val[0]);
+            handileClickSearchQuery("price", val[0]);
+          }}
         />
-        <p className="mt-2">${price}</p>
+        <p className="mt-2 text-gray-500">Selected Price : ${price}</p>
 
         <h2 className="text-lg font-semibold mt-6">Product Types</h2>
         <RadioGroup className="space-y-2 mt-2">
